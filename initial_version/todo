@@ -1,0 +1,50 @@
+
+TODO:
+
+1- Translate the convoluional code in opt.c to cpuC assembly  (I already translated some parts (the loops bodies) in opt.c).
+   As can be seen you now need three memory modules (instead of the current Qmem module used in the current version):
+   - A hexaram module (mem.v) to hold weight[] allowing six parallel load operations
+   - A hexaram module (mem.v) to hold in_layer[] allowing six parallel load operations
+   - A singleram (mem.v) to hold y[]
+2- Add the assembly of opt.c to doinst.c  (i.e. replace inst1()...inst8() by the new instructions).
+   and generate myprog.mem
+   Note currently doinst contains the cpuC assembly inst1()...inst8() of the program:
+   for(i=1;i<M-1;i++)
+    for(j=1;j<N-1;j++)
+        A[i,j] = A[i-1,j]+A[i+1,j]+A[i,j-1]+A[i,j+1]
+  coded as
+0	PC=PC+1 || R1=1
+1	PC=Mux(PC+1,PC+C4,R1<C2-1)
+2	    PC=PC+1 || R2=1
+3	    PC=Mux(PC+1,PC+1+C5,R2<C3-1)
+4	        PC=PC+1 || A1 = (R1-1)*C3+R2 || A2=(R1+1)*C3+R2 || A3=R1*C3+R2-1 || A4=R1*C3+R2+1 || we1=0 || we2=0
+5	        PC=PC+1 || A1 = R1*C3+R2 || v1=M1+M2+M3+M4 || we1=1 || we2=0
+6	    R2=R2+1 || PC=C5
+7	R1=R1+1 || PC=C6
+where
+Regs:		Const:		Nplus:	7
+R0	PC	C1	1	Nminus	2
+R1	i	C2	M=5	Nmul	4
+R2	j	C3	N=4	Nles	1
+		C4	7		
+		C5	3	Nmem	1
+		C6	1	Nmux	1
+		C7	0		
+
+ which you need to replace by the assembly code of the convolutional code in opt.c.
+
+3- Modify the verilog code of cpuC to support the three memory modules instead of the current Qmem.
+4- use readmem to intialize in_layer[] and weight[].
+5- Test and simulate the execution of the convolution code of opt.c by your cpuC.
+6- Short encoding:
+   6.1- Select a short encoding scheme (note that in the full matrix encoding there can be at most one '1' bit per column. 
+   6.2- Replace the for(i=0;i<H;i++) for(j=0;j<W;j++) fprintf(prog1,"%1d",inst[i][j]); fprintf(prog1,"\n");
+        in doinst.c by  the short encoding of inst[][]
+   6.3- Realize the decoding scheme in the Verilog code of the cpuC 
+        instead of:
+            assign crossbar_con = program1[Regs[`PC]];
+        add a verilog module:
+            decode(program1[Regs[`PC]],crossbar_con);
+        try not to use an extra clock cycle for the decoding and realize the decoding operation by a combinatorial circuit.
+
+
