@@ -1,51 +1,34 @@
 //PROGRAM TO COMPUTE ONE CPUC INST
 //define the vertical wires as appeared in your cpuC ordered left to right
 //if there are several memory module define them one after the other
-//the number of the unit u r using is passed as argument to its type-function, e.g. if you have two plus units
+//the number of the unit u r using is passed as argument to its type-function, e.g. if you have two plus units 
 //call plus1(0,x,y) for the first plus-op and plus(1,x,y) for the second op
 #include <stdio.h>
-#define width //4
-#define Nreg	14
-#define Nplus	12
-#define Nminus	1
-#define Nmul	9
+#define width 4
+#define Nreg	3	
+#define Nplus	7	
+#define Nminus	2	
+#define Nmul	4
 #define Nles	1
-#define QmemA   //4  //#address ports of Qmem module
-#define QmemV   //2  //#in-value ports of QMEM
-#define QmemW   //2
-#define Qmem    //4  //#out-ports of QMEM
-#define Nmux	6
-                                            //compute number of vertical wires in the crossbar
-#define W       //Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+QmemA+QmemV+QmemW+Nmux*3
-                                            //Additional horisontal rows
-#define QmemM   //4
-#define Nconst	23
-#define H       //Nreg+Nplus+Nminus+Nmul+Nles+Nconst+QmemM+Nmux
-                                            //these are the program constants,
-#define c1 6 // conv in y number
-#define c2 6 // elements in line fro y
-#define c3 6 // lines in conv in y
-#define c4 (C2+2)*2 // = 16
+#define QmemA   4  //#address ports of Qmem module
+#define QmemV   2  //#in-value ports of QMEM
+#define QmemW   2
+#define Qmem    4  //#out-ports of QMEM
+#define Nmux	1
+//compute number of vertical wires in the crossbar
+#define W       Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+QmemA+QmemV+QmemW+Nmux*3
+//Additional horisontal rows 
+#define QmemM   4 
+#define Nconst	7
+#define H       Nreg+Nplus+Nminus+Nmul+Nles+Nconst+QmemM+Nmux
+//these are the program constants, 
+#define c0 1
+#define c1 5 //M
+#define c2 4  //N
+#define c3 7
+#define c4 4
 #define c5 2
-#define c6 C2*C3 // = 36
-#define c7 C4*2 // = 32
-#define c8 C1*C1 // = 36 ,
-#define c9 //end of loop 1 (with r the layers)
-#define c10 //end of loop 2 (with m the rows)
-#define c11 //end of loop 3.1 (with k the first 6 elements)
-#define c12 //end of loop 3.2 (with n the elements in row m)
-#define c13 // start of loop 1
-#define c14 // start of loop 2
-#define c15 // start of loop 3.1
-#define c16 // start of loop 3.2
-#define c17 0
-#define c18 1
-#define c19 2
-#define c20 3
-#define c21 4
-#define c22 5
-#define c23 6
-
+#define c6 0
 FILE *prog1,*const1,*config;
 
 int inst[H][W];   //The instruction
@@ -140,9 +123,9 @@ void inst5()
   ass(vQA(0), plus(1, mull(0, minus(0,R(1),C(0)), C(2)), R(2))); //A0 = (R1-1)*C2+R2
   ass(vQA(1), plus(3, mull(1, plus(2,R(1),C(0)), C(2)), R(2))); //A1=(R1+1)*C2+j
   ass(vQA(2), plus(4, mull(2, R(1),C(2)), minus(1,R(2),C(0)))); //A2=R1*C2+R2-1
-  ass(vQA(3), plus(5, mull(3, R(1),C(2)), plus(6,R(2),C(0)))); //A3=R1*C2+R2+1
-  ass(vQW(0),C(6));                                              //we1=C6
-  ass(vQW(1),C(6));                                              //we2=C6
+  ass(vQA(3), plus(5, mull(3, R(1),C(2)), plus(6,R(2),C(0)))); //A3=R1*C2+R2+1 
+  ass(vQW(0),C(6));                                              //we1=C6 
+  ass(vQW(1),C(6));                                              //we2=C6 
   for(i=0;i<H;i++) for(j=0;j<W;j++) fprintf(prog1,"%1d",inst[i][j]); fprintf(prog1,"\n");
 }
 //PC=PC+C0 || A0 = R1*C3+R2 || QV0=M1+M2+M3+M4 || we1=C0 || we2=C6
@@ -152,8 +135,8 @@ void inst6()
   ass(vR(0),plus(0,R(0),C(0)));  //PC=PC+C0
   ass(vQA(0), plus(1, mull(0,R(1),C(2)),R(2))); //A0 = R1*C2+R2
   ass(vQV(0), plus(3,QM(0),plus(2,QM(1),plus(4,QM(2),QM(3))))); //QV0=M1+M2+M3+M4
-  ass(vQW(0),C(0));                                              //we1=C0
-  ass(vQW(1),C(6));                                              //we2=C6
+  ass(vQW(0),C(0));                                              //we1=C0 
+  ass(vQW(1),C(6));                                              //we2=C6 
 }
 
 //[R2=R2+C0 || PC=C5 ]
@@ -224,8 +207,8 @@ fprintf(config,"`define PROGRAM_FILE \"my_program.mem\"\n");
 void main()
 {
   prog1=fopen("myprog.mem","w");
-  const1 = fopen("mycon.mem","w");
-  config = fopen("params.vh","w");
+  const1 = fopen("mycon.mem","w"); 
+  config = fopen("params.vh","w"); 
   int i,j,k;
   inst1();
   inst2();
