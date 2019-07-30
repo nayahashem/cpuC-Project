@@ -21,22 +21,21 @@ PC = MUX(PC+1, PC+C9, R1<C1)//here is C13
                (Rout3in_layer*Rout3weight + Rout4in_layer*Rout4weight + Rout5in_layer*Rout5weight)
             ]
 
+            [
+                R5 = Mux(R4, R5, R3==0)
+                R6 = Mux(R4, R6, R3==1)
+                R7 = Mux(R4, R7, R3==2)
+                R8 = Mux(R4, R8, R3==3)
+                R9 = Mux(R4, R9, R3==4)
+                R10 = Mux(R4, R10, R3==5)
+            ]
 
-            R5 = Mux(R4, R5, R3==0)
-            R6 = Mux(R4, R6, R3==1)
-            R7 = Mux(R4, R7, R3==2)
-            R8 = Mux(R4, R8, R3==3)
-            R9 = Mux(R4, R9, R3==4)
-            R10 = Mux(R4, R10, R3==5)
 
             R3=R3+1 || PC=C15 || R20=+=1 || R21+=1 || R22+=1 || R23+=1 || R24+=1 || R25+=1 || R30+=1 || R31+=1 || R32+=1 || R33+=1 || R34+=1 || R35+=1//go back to for k
             //here is C11
 
-
-        [ PC=PC+1 || R11 = R5+R6+R7+R8+R9+R10 || R3=0 ]
-
         [
-            PC=PC+1 ||
+            PC=PC+1 || R11 = R5+R6+R7+R8+R9+R10 || R3=0
             Radd0in_layer = R20 || Radd1in_layer = R21 || Radd2in_layer = R22 ||
             Radd3in_layer = R23 || Radd4in_layer = R24 || Radd5in_layer = R25 ||
             Radd0weight   = R30-=1 || Radd1weight   = R31-=1 || Radd2weight   = R32-=1 ||
