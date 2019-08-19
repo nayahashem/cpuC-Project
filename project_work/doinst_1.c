@@ -8,7 +8,7 @@
 #define Nreg	23
 #define Nplus	7
 #define Nminus	6
-#define Nmul	4
+#define Nmul	6
 #define Nles	1
 #define Nequ    6
 /*
@@ -83,9 +83,9 @@ int C(int x){ return(Nreg+Nplus+Nminus+Nmul+Nles+Nequ+x);}   //return the horiso
 int R(int x){ return(x);}   //return the horisontal wire corresponding to the value of this register
 //int QM(int x){ return(Nreg+Nplus+Nminus+Nmul+Nles+Nequ+Nconst+Nmux+x);}   //return the horisontal wire corresponding to the value QMEM outputs
 
-int IM(int x){ return(Nreg+Nplus+Nminus+Nmul+Nles+Nequ+Nconst+Nmux+x);}   //return the horisontal wire corresponding to the value QMEM outputs
-int WM(int x){ return(Nreg+Nplus+Nminus+Nmul+Nles+Nequ+Nconst+Nmux+ImemM+x);}   //return the horisontal wire corresponding to the value QMEM outputs
-int YM(int x){ return(Nreg+Nplus+Nminus+Nmul+Nles+Nequ+Nconst+Nmux+ImemM+WmemM+x);}   //return the horisontal wire corresponding to the value QMEM outputs
+int M_I(int x){ return(Nreg+Nplus+Nminus+Nmul+Nles+Nequ+Nconst+Nmux+x);}   //return the horisontal wire corresponding to the value QMEM outputs
+int M_W(int x){ return(Nreg+Nplus+Nminus+Nmul+Nles+Nequ+Nconst+Nmux+ImemM+x);}   //return the horisontal wire corresponding to the value QMEM outputs
+int M_Y(int x){ return(Nreg+Nplus+Nminus+Nmul+Nles+Nequ+Nconst+Nmux+ImemM+WmemM+x);}   //return the horisontal wire corresponding to the value QMEM outputs
 
 
 int vR(int x){ return(x);}   //return the vertical wire corresponding to this register
@@ -128,19 +128,19 @@ int vQW(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+QmemA+QmemV+x);}   //
 */
 
 
-int vIA(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+x);}   //return the vertical wire corresponding to this address port of Imem
-int vWA(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+x);}   //return the vertical wire corresponding to this address port of Wmem
-int vYA(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+x);}   //return the vertical wire corresponding to this address port of Ymem
+int vA_I(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+x);}   //return the vertical wire corresponding to this address port of Imem
+int vA_W(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+x);}   //return the vertical wire corresponding to this address port of Wmem
+int vA_Y(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+x);}   //return the vertical wire corresponding to this address port of Ymem
 
 
-int vIV(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+x);}   //return the vertical wire corresponding to this in value port of Imem
-int vWV(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+x);}   //return the vertical wire corresponding to this in value port of Wmem
-int vYV(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+WmemV+x);}   //return the vertical wire corresponding to this in value port of Ymem
+int vV_I(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+x);}   //return the vertical wire corresponding to this in value port of Imem
+int vV_W(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+x);}   //return the vertical wire corresponding to this in value port of Wmem
+int vV_Y(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+WmemV+x);}   //return the vertical wire corresponding to this in value port of Ymem
 
 
-int vIW(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+WmemV+YmemV+x);}   //return the vertical wire corresponding to this read/write  port of Imem
-int vWW(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+WmemV+YmemV+ImemW+x);}   //return the vertical wire corresponding to this read/write  port of Wmem
-int vYW(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+WmemV+YmemV+ImemW+WmemW+x);}   //return the vertical wire corresponding to this read/write  port of Ymem
+int vW_I(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+WmemV+YmemV+x);}   //return the vertical wire corresponding to this read/write  port of Imem
+int vW_W(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+WmemV+YmemV+ImemW+x);}   //return the vertical wire corresponding to this read/write  port of Wmem
+int vW_Y(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+WmemV+YmemV+ImemW+WmemW+x);}   //return the vertical wire corresponding to this read/write  port of Ymem
 
 
 
@@ -234,26 +234,26 @@ void inst7()
 
     ass(vR(0),plus(0,R(0),C(18)));
 
-    ass(vIW(0), C(17));
-    ass(vIW(1), C(17));
-    ass(vIW(2), C(17));
-    ass(vWW(0), C(17));
-    ass(vWW(1), C(17));
-    ass(vWW(2), C(17));
+    ass(vW_I(0), C(17));
+    ass(vW_I(1), C(17));
+    ass(vW_I(2), C(17));
+    ass(vW_W(0), C(17));
+    ass(vW_W(1), C(17));
+    ass(vW_W(2), C(17));
 
-    ass(vIA(0), R(12));
-    ass(vIA(1), R(13));
-    ass(vIA(2), R(14));
-    ass(vIA(3), R(15));
-    ass(vIA(4), R(16));
-    ass(vIA(0), R(17));
+    ass(vA_I(0), R(12));
+    ass(vA_I(1), R(13));
+    ass(vA_I(2), R(14));
+    ass(vA_I(3), R(15));
+    ass(vA_I(4), R(16));
+    ass(vA_I(0), R(17));
 
-    ass(vWA(0), R(18));
-    ass(vWA(1), R(19));
-    ass(vWA(2), R(20));
-    ass(vWA(3), R(21));
-    ass(vWA(4), R(22));
-    ass(vWA(5), R(23));
+    ass(vA_W(0), R(18));
+    ass(vA_W(1), R(19));
+    ass(vA_W(2), R(20));
+    ass(vA_W(3), R(21));
+    ass(vA_W(4), R(22));
+    ass(vA_W(5), R(23));
 }
 
 void inst8()
@@ -262,7 +262,7 @@ void inst8()
     for(i=0;i<H;i++) for(j=0;j<W;j++) inst[i][j]=0;
 
     ass(vR(0), plus(0,R(0),C(18)));
-    ass(vR(4), plus(5,plus(4,plus(1,mull(0,IM(0),WM(0)),mull(1,IM(1),WM(1))),plus(2,mull(2,IM(2),WM(2)),mull(3,IM(3),WM(3)))),plus(3,mull(4,IM(4),WM(4)),mull(5,IM(5),WM(5)))));
+    ass(vR(4), plus(5,plus(4,plus(1,mull(0,M_I(0),M_W(0)),mull(1,M_I(1),M_W(1))),plus(2,mull(2,M_I(2),M_W(2)),mull(3,M_I(3),M_W(3)))),plus(3,mull(4,M_I(4),M_W(4)),mull(5,M_I(5),M_W(5)))));
 
     for(i=0;i<H;i++) for(j=0;j<W;j++) fprintf(prog1,"%1d",inst[i][j]); fprintf(prog1,"\n");
 }
@@ -311,36 +311,36 @@ void inst11()
     ass(vR(11),plus(5,plus(4,plus(1,R(5),R(6)),plus(2,R(7),R(8))),plus(3,R(9),R(10))));
     ass(vR(3),C(17));
 
-    ass(vIW(0), C(17));
-    ass(vIW(1), C(17));
-    ass(vIW(2), C(17));
-    ass(vWW(0), C(17));
-    ass(vWW(1), C(17));
-    ass(vWW(2), C(17));
+    ass(vW_I(0), C(17));
+    ass(vW_I(1), C(17));
+    ass(vW_I(2), C(17));
+    ass(vW_W(0), C(17));
+    ass(vW_W(1), C(17));
+    ass(vW_W(2), C(17));
 
-    ass(vIA(0), R(12));
-    ass(vIA(1), R(13));
-    ass(vIA(2), R(14));
-    ass(vIA(3), R(15));
-    ass(vIA(4), R(16));
-    ass(vIA(0), R(17));
+    ass(vA_I(0), R(12));
+    ass(vA_I(1), R(13));
+    ass(vA_I(2), R(14));
+    ass(vA_I(3), R(15));
+    ass(vA_I(4), R(16));
+    ass(vA_I(0), R(17));
 
-    ass(vWA(0), minus(0,R(18),C(18)));
+    ass(vA_W(0), minus(0,R(18),C(18)));
     ass(vR(18), minus(0,R(18),C(18)));
 
-    ass(vWA(1), minus(1,R(19),C(18)));
+    ass(vA_W(1), minus(1,R(19),C(18)));
     ass(vR(19), minus(1,R(19),C(18)));
 
-    ass(vWA(2), minus(2,R(20),C(18)));
+    ass(vA_W(2), minus(2,R(20),C(18)));
     ass(vR(20), minus(2,R(20),C(18)));
 
-    ass(vWA(3), minus(3,R(21),C(18)));
+    ass(vA_W(3), minus(3,R(21),C(18)));
     ass(vR(21), minus(3,R(21),C(18)));
 
-    ass(vWA(4), minus(4,R(22),C(18)));
+    ass(vA_W(4), minus(4,R(22),C(18)));
     ass(vR(22), minus(4,R(22),C(18)));
 
-    ass(vWA(5), minus(5,R(23),C(18)));
+    ass(vA_W(5), minus(5,R(23),C(18)));
     ass(vR(23), minus(5,R(23),C(18)));
 
     for(i=0;i<H;i++) for(j=0;j<W;j++) fprintf(prog1,"%1d",inst[i][j]); fprintf(prog1,"\n");
@@ -351,7 +351,7 @@ void inst12()
   for(i=0;i<H;i++) for(j=0;j<W;j++) inst[i][j]=0;
 
   ass(vR(0),mux(0,plus(0,R(0),C(18)),plus(1,R(0),C(12)),les(0,R(3),C(2))));  //PC=Mux(PC+C0,PC+C2,R1<C1-1)
-  ass(vYW(0), C(17));
+  ass(vW_Y(0), C(17));
   ass(vYA(0), plus(2,mull(0,R(1),C(6)),plus(3,mull(1,R(2),C(2)),R(3))));
 
   for(i=0;i<H;i++) for(j=0;j<W;j++) fprintf(prog1,"%1d",inst[i][j]); fprintf(prog1,"\n");                                         //we2=C6
@@ -364,7 +364,7 @@ void inst13()
     for(i=0;i<H;i++) for(j=0;j<W;j++) inst[i][j]=0;
 
     ass(vR(0),  plus(0,R(0),C(18)));
-    ass(vR(4),  plus(5,plus(4,plus(1,mull(0,IM(0),WM(0)),mull(1,IM(1),WM(1))),plus(2,mull(2,IM(2),WM(2)),mull(3,IM(3),WM(3)))),plus(3,mull(4,IM(4),WM(4)),mull(5,IM(5),WM(5)))));
+    ass(vR(4),  plus(5,plus(4,plus(1,mull(0,M_I(0),M_W(0)),mull(1,M_I(1),M_W(1))),plus(2,mull(2,M_I(2),M_W(2)),mull(3,M_I(3),M_W(3)))),plus(3,mull(4,M_I(4),M_W(4)),mull(5,M_I(5),M_W(5)))));
     ass(vR(11), plus(6,R(11),YM(0)));
 
     for(i=0;i<H;i++) for(j=0;j<W;j++) fprintf(prog1,"%1d",inst[i][j]); fprintf(prog1,"\n");
@@ -376,41 +376,43 @@ void inst14()
     for(i=0;i<H;i++) for(j=0;j<W;j++) inst[i][j]=0;
 
     ass(vR(0),  plus(0,R(0),C(18)));
-    ass(vYV(0), R(11));
+    ass(vV_Y(0), R(11));
 
-    ass(vIA(0), plus(1,R(12),C(18)));
+    ass(vA_I(0), plus(1,R(12),C(18)));
     ass(vR(12), plus(1,R(12),C(18)));
 
-    ass(vIA(1), plus(2,R(13),C(18)));
+    ass(vA_I(1), plus(2,R(13),C(18)));
     ass(vR(13), plus(2,R(13),C(18)));
 
-    ass(vIA(2), plus(3,R(14),C(18)));
+    ass(vA_I(2), plus(3,R(14),C(18)));
     ass(vR(14), plus(3,R(14),C(18)));
 
-    ass(vIA(3), plus(4,R(15),C(18)));
+    ass(vA_I(3), plus(4,R(15),C(18)));
     ass(vR(15), plus(4,R(15),C(18)));
 
-    ass(vIA(4), plus(5,R(16),C(18)));
+    ass(vA_I(4), plus(5,R(16),C(18)));
     ass(vR(16), plus(5,R(16),C(18)));
 
-    ass(vIA(0), plus(6,R(17),C(18)));
+    ass(vA_I(0), plus(6,R(17),C(18)));
     ass(vR(17), plus(6,R(17),C(18)));
 
-    ass(vWA(0), R(18));
-    ass(vWA(1), R(19));
-    ass(vWA(2), R(20));
-    ass(vWA(3), R(21));
-    ass(vWA(4), R(22));
-    ass(vWA(5), R(23));
+    ass(vA_W(0), R(18));
+    ass(vA_W(1), R(19));
+    ass(vA_W(2), R(20));
+    ass(vA_W(3), R(21));
+    ass(vA_W(4), R(22));
+    ass(vA_W(5), R(23));
 
-    ass(vIW(0), C(17));
-    ass(vIW(1), C(17));
-    ass(vIW(2), C(17));
-    ass(vWW(0), C(17));
-    ass(vWW(1), C(17));
-    ass(vWW(2), C(17));
+    ass(vW_I(0), C(17));
+    ass(vW_I(1), C(17));
+    ass(vW_I(2), C(17));
+    ass(vW_W(0), C(17));
+    ass(vW_W(1), C(17));
+    ass(vW_W(2), C(17));
 
-    ass(vYW(0), C(18));
+
+
+    ass(vW_Y(0), C(18));
 
     for(i=0;i<H;i++) for(j=0;j<W;j++) fprintf(prog1,"%1d",inst[i][j]); fprintf(prog1,"\n");
 }
