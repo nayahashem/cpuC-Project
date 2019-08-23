@@ -246,7 +246,7 @@ void inst7()
     ass(vA_I(2), R(14));
     ass(vA_I(3), R(15));
     ass(vA_I(4), R(16));
-    ass(vA_I(0), R(17));
+    ass(vA_I(5), R(17));
 
     ass(vA_W(0), R(18));
     ass(vA_W(1), R(19));
