@@ -113,7 +113,7 @@ wire [`W-1:0]  M5h_wires  [Nmem-2:0];
 wire [`W-1:0]  M6h_wires  [Nmem-2:0];
 wire [`W-1:0]  tmp_val  [Nmem-1:0]; //what is it used for?
 
-wire [`W-1:0]  mux1h_wires  [Nmux-1:0];
+wire [`W-1:0]  muxh_wires  [Nmux-1:0];
 
 reg  [`W-1:0]  Regs [Nreg-1:0];      // word_size = `W
 reg  [0:`W-1]  consts [0:Nconst-1];  // word_size = `W
@@ -175,6 +175,7 @@ generate
 	end
   end
 endgenerate
+//done
 
 
 generate
@@ -186,6 +187,7 @@ generate
     end
   end
 endgenerate
+//done
 
 generate
   for (X = 0; X < Nreg; X = X+1) begin
@@ -196,6 +198,7 @@ generate
     end
   end
 endgenerate
+//done
 
 generate
   for (X = 0; X < 2*Nop; X = X+1) begin
@@ -206,6 +209,7 @@ generate
     end
   end
 endgenerate
+//done
 
 generate
   for (X = 0; X < 2*Nop; X = X+1) begin
@@ -216,6 +220,7 @@ generate
 	end
   end
 endgenerate
+//done
 
 generate
   for (X = 0; X < Nreg; X = X+1) begin
@@ -226,6 +231,7 @@ generate
     end
   end
 endgenerate
+//done
 
 generate
   for (X = 0; X < 2*Nop; X = X+1) begin
@@ -236,6 +242,7 @@ generate
     end
   end
 endgenerate
+//done
 
 //Rv[X] = muxh[Y]
 generate
@@ -247,6 +254,7 @@ generate
     end
   end
 endgenerate
+//done
 
 
 //Opv[X] = muxh[Y]
@@ -259,6 +267,7 @@ generate
     end
   end
 endgenerate
+//done
 
 
 //Rv[X] = M1h[Y]
@@ -283,6 +292,7 @@ generate
     end
   end
 endgenerate
+//done
 
 //Opv[X] = M1h[Y]
 //Opv[X] = M2h[Y]
@@ -306,6 +316,7 @@ generate
     end
   end
 endgenerate
+//done
 
 
 //A1v[X] = Rh[Y]
@@ -322,16 +333,37 @@ generate
 	  for ( Z = `W-1; Z >= 0 ; Z = Z-1) begin
 		bufif1 regmem1(A1v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X]);
 		bufif1 regmem2(A2v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+1]);
-		bufif1 regmem3(A3v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+2]);
-		bufif1 regmem4(A4v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+3]);
-		bufif1 regmem5(V1v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+4]);
-		bufif1 regmem6(V2v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+5]);
-		bufif1 regmem7(W1v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+6]);
-		bufif1 regmem8(W2v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+7]);
+		if(Y!=2)
+		{
+			bufif1 regmem3(A3v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+2]);
+			bufif1 regmem4(A4v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+3]);
+			bufif1 regmem5(A3v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+4]);
+			bufif1 regmem6(A4v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+5]);
+
+		}
+		
+		if(Y==2)
+		{
+			bufif1 regmem5(V1v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+4]);
+			bufif1 regmem6(V2v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+5]);
+			bufif1 regmem7(W1v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+6]);
+		
+		}
+		else
+		{
+			bufif1 regmem7(V1v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+6]);
+			bufif1 regmem8(V2v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+7]);
+			
+			bufif1 regmem9(W1v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+8]);
+			bufif1 regmem10(W2v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+9]);
+			bufif1 regmem11(W3v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+10]);
+		}
+		
 	  end
     end
   end
 endgenerate
+//done
 
 //muxAv[X]   = Rh[Y]
 //muxBv[X]   = Rh[Y]
@@ -340,13 +372,14 @@ generate
   for (X = 0; X < Nmux; X = X+1) begin
     for ( Y = 0; Y < Nreg; Y = Y+1) begin
 	  for ( Z = `W-1; Z >= 0 ; Z = Z-1) begin
-		bufif1 regmux1(muxAv_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+8*Nmem+X]);
-		bufif1 regmux2(muxBv_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+8*Nmem+X+1]);
-		bufif1 regmux3(muxSelv_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+8*Nmem+X+2]);
+		bufif1 regmux1(muxAv_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X]);
+		bufif1 regmux2(muxBv_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+1]);
+		bufif1 regmux3(muxSelv_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+2]);
 	  end
     end
   end
 endgenerate
+//done
 
 
 //A1v[X] = Oph[Y]
@@ -365,16 +398,35 @@ generate
 	  for ( Z = `W-1; Z >= 0 ; Z = Z-1) begin
         bufif1 opmem1(A1v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X]);
         bufif1 opmem2(A2v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+1]);
-        bufif1 opmem3(A3v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+2]);
-        bufif1 opmem4(A4v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+3]);
-        bufif1 opmem5(V1v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+4]);
-        bufif1 opmem6(V2v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+5]);
-        bufif1 opmem7(W1v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+6]);
-        bufif1 opmem8(W2v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+7]);
+		if(X!=2)
+		{
+			bufif1 opmem3(A3v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+2]);
+       		bufif1 opmem4(A4v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+3]);
+       	 	bufif1 opmem5(A5v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+4]);
+        	bufif1 opmem6(A6v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+5]);
+        
+		}
+        
+		if(X==2)
+		{
+			bufif1 opmem3(V1v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+2]);
+        	bufif1 opmem4(V2v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+3]);
+        	bufif1 opmem5(W1v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+4]);
+		}
+		else
+		{
+			bufif1 opmem7(V1v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+6]);
+        	bufif1 opmem8(V2v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+7]);
+        	bufif1 opmem9(W1v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+8]);
+        	bufif1 opmem10(W2v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+9]);
+			bufif1 opmem11(W3v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+10]);
+		}
+		
       end
 	end
   end
 endgenerate
+//done
 
 //muxAv[X]   = Oph[Y]
 //muxBv[X]   = Oph[Y]
@@ -383,13 +435,14 @@ generate
   for (X = 0; X < Nmux; X = X+1) begin
     for ( Y = 0; Y < Nop; Y = Y+1) begin
 	  for ( Z = `W-1; Z >= 0 ; Z = Z-1) begin
-        bufif1 opmux1(muxAv_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+8*Nmem+X]);
-        bufif1 opmux2(muxBv_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+8*Nmem+X+1]);
-        bufif1 opmux3(muxSelv_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+8*Nmem+X+2]);
+        bufif1 opmux1(muxAv_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X]);
+        bufif1 opmux2(muxBv_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+1]);
+        bufif1 opmux3(muxSelv_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+2]);
       end
 	end
   end
 endgenerate
+//done
 
 //A1v[X] = Ch[Y]
 //A2v[X] = Ch[Y]
@@ -405,16 +458,35 @@ generate
 	  for ( Z = `W-1; Z >= 0 ; Z = Z-1) begin
 		bufif1 constmem1(A1v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X]);
 		bufif1 constmem2(A2v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+1]);
-		bufif1 constmem3(A3v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+2]);
-		bufif1 constmem4(A4v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+3]);
-		bufif1 constmem5(V1v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+4]);
-		bufif1 constmem6(V2v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+5]);
-		bufif1 constmem7(W1v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+6]);
-		bufif1 constmem8(W2v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+7]);
+		if(X!=2)
+		{
+			bufif1 constmem3(A3v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+2]);
+			bufif1 constmem4(A4v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+3]);
+			bufif1 constmem5(A5v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+4]);
+			bufif1 constmem6(A6v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+5]);
+	
+		}
+		
+		if(X==2)
+		{
+			bufif1 constmem3(V1v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+2]);
+			bufif1 constmem4(V2v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+3]);
+			bufif1 constmem5(W1v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+4]);
+			bufif1 constmem6(W2v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+5]);
+		}
+		else
+		{
+			bufif1 constmem7(V1v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+6]);
+			bufif1 constmem8(V2v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+7]);
+			bufif1 constmem9(W1v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+8]);
+			bufif1 constmem10(W2v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+9]);
+		}
+		
 	  end
     end
   end
 endgenerate
+//done
 
 //muxAv[X]   = Ch[Y]
 //muxBv[X]   = Ch[Y]
@@ -423,9 +495,9 @@ generate
   for (X = 0; X < Nmux; X = X+1) begin
     for ( Y = 0; Y < Nconst; Y = Y+1) begin
 	  for ( Z = `W-1; Z >= 0 ; Z = Z-1) begin
-		bufif1 constmux1(muxAv_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+8*Nmem+X]);
-		bufif1 constmux2(muxBv_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+8*Nmem+X+1]);
-		bufif1 constmux3(muxSelv_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+8*Nmem+X+2]);
+		bufif1 constmux1(muxAv_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X]);
+		bufif1 constmux2(muxBv_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+1]);
+		bufif1 constmux3(muxSelv_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+X+2]);
 	  end
     end
   end

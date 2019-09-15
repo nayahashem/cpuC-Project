@@ -20,23 +20,23 @@
 
 #define ImemA   6  //#address ports of Qmem module
 #define ImemV   2  //#in-value ports of QMEM
-#define ImemW   3
-#define Imem    6  //#out-ports of QMEM
+#define ImemW   2
+//#define Imem    6  //#out-ports of QMEM
 
 #define WmemA   6  //#address ports of Qmem module
 #define WmemV   2  //#in-value ports of QMEM
-#define WmemW   3
-#define Wmem    6  //#out-ports of QMEM
+#define WmemW   2
+//#define Wmem    6  //#out-ports of QMEM
 
 #define YmemA   2  //#address ports of Qmem module
 #define YmemV   2  //#in-value ports of QMEM
-#define YmemW   1
-#define Ymem    2  //#out-ports of QMEM
+#define YmemW   2
+//#define Ymem    2  //#out-ports of QMEM
 
 #define NmemA ImemA + WmemA + YmemA
 #define NmemV ImemV + WmemV + YmemV
 #define NmemW ImemW + WmemW + YmemW
-#define Nmem Imem + Wmem + Ymem
+//#define Nmem Imem + Wmem + Ymem //we dont use this anywhere
 
 
 #define Nmux	6
@@ -118,9 +118,7 @@ int placement(int i, char mem, char wire)
 
     if(wire=='W')
     {
-        if(i<2)
-            return 3*i+place;
-        return 1+2*i+place;
+            return 2*i+place;
     }
 
     if(wire=='V')
@@ -161,11 +159,27 @@ int equ(int op, int x, int y)
     return(Nreg+Nplus+Nminus+Nmul+Nles+op);
 }
 /*
+the old from vr3
 int vQA(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+x);}   //return the vertical wire corresponding to this address port of Qmem
 int vQV(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+QmemA+x);}   //return the vertical wire corresponding to this in value port of Qmem
 int vQW(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+QmemA+QmemV+x);}   //return the vertical wire corresponding to this read/write  port of Qmem
 */
 
+/*
+int vA_I(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+x);}   //return the vertical wire corresponding to this address port of Imem
+int vA_W(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+x);}   //return the vertical wire corresponding to this address port of Wmem
+int vA_Y(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+x);}   //return the vertical wire corresponding to this address port of Ymem
+
+
+int vV_I(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+x);}   //return the vertical wire corresponding to this in value port of Imem
+int vV_W(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+x);}   //return the vertical wire corresponding to this in value port of Wmem
+int vV_Y(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+WmemV+x);}   //return the vertical wire corresponding to this in value port of Ymem
+
+
+int vW_I(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+WmemV+YmemV+x);}   //return the vertical wire corresponding to this read/write  port of Imem
+int vW_W(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+WmemV+YmemV+ImemW+x);}   //return the vertical wire corresponding to this read/write  port of Wmem
+int vW_Y(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+ImemA+WmemA+YmemA+ImemV+WmemV+YmemV+ImemW+WmemW+x);}   //return the vertical wire corresponding to this read/write  port of Ymem
+*/
 
 int vA_I(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+placement(x,'A','I'));}   //return the vertical wire corresponding to this address port of Imem
 int vA_W(int x){ return(Nreg+Nplus*2+Nminus*2+Nmul*2+Nles*2+Nequ*2+Nmux*3+placement(x,'A','W'));}   //return the vertical wire corresponding to this address port of Wmem
