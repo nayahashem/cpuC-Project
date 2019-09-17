@@ -1,4 +1,4 @@
-`define W 4 //What is this?
+`define W 8 //What is this?
 `define PC 0
  
 `define prog_size 17 // amount of lines in project

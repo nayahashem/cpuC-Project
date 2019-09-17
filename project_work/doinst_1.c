@@ -528,12 +528,12 @@ void inst17()
 void myprintrow(int x)
 {
 if(x == 0) printf("PC ");
-else if(x < Nreg) printf("R%2d",x);
-else if(x < Nreg+Nplus*2 ) printf("+%2d",(x-Nreg)/2);
-else if(x < Nreg+Nplus*2+Nmul*2) printf("*%2d",(x-Nreg-Nplus*2)/2);
-else if(x < Nreg+Nplus*2+Nmul*2+Nminus*2) printf("-%2d",(x-Nreg-Nplus*2-Nmul*2)/2);
-else if(x < Nreg+Nplus*2+Nmul*2+Nminus*2+Nles*2) printf("<%2d",(x-Nreg-Nplus*2-Nmul*2-Nminus*2)/2);
-else printf("%3d",x);
+else if(x < Nreg) printf("R%d ",x);
+else if(x < Nreg+Nplus*2 ) printf("+%d ",(x-Nreg)/2);
+else if(x < Nreg+Nplus*2+Nmul*2) printf("*%d ",(x-Nreg-Nplus*2)/2);
+else if(x < Nreg+Nplus*2+Nmul*2+Nminus*2) printf("-%d ",(x-Nreg-Nplus*2-Nmul*2)/2);
+else if(x < Nreg+Nplus*2+Nmul*2+Nminus*2+Nles*2) printf("<%d ",(x-Nreg-Nplus*2-Nmul*2-Nminus*2)/2);
+else printf("%d ",x);
 }
 
 void niceprint()

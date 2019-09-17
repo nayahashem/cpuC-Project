@@ -85,7 +85,7 @@ wire [`W-1:0]  V1v_Y_wires  [Nmem-1:0];
 
 
 wire [`W-1:0]  W1v_wires  [Nmem-1:0];
-wire [`W-1:0]  W2v_wires  [Nmem-2:0];
+wire [`W-1:0]  W2v_wires  [Nmem-1:0];
 wire [`W-1:0]  W3v_wires  [Nmem-2:0];
 /*
 wire [`W-1:0]  W0v_I_wires  [Nmem-1:0];
@@ -337,8 +337,8 @@ generate
 		{
 			bufif1 regmem3(A3v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+2]);
 			bufif1 regmem4(A4v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+3]);
-			bufif1 regmem5(A3v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+4]);
-			bufif1 regmem6(A4v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+5]);
+			bufif1 regmem5(A5v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+4]);
+			bufif1 regmem6(A6v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+5]);
 
 		}
 		
@@ -347,7 +347,7 @@ generate
 			bufif1 regmem5(V1v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+4]);
 			bufif1 regmem6(V2v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+5]);
 			bufif1 regmem7(W1v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+6]);
-		
+			bufif1 regmem8(W2v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+7]);
 		}
 		else
 		{
@@ -356,7 +356,6 @@ generate
 			
 			bufif1 regmem9(W1v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+8]);
 			bufif1 regmem10(W2v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+9]);
-			bufif1 regmem11(W3v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+X+10]);
 		}
 		
 	  end
@@ -412,6 +411,7 @@ generate
 			bufif1 opmem3(V1v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+2]);
         	bufif1 opmem4(V2v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+3]);
         	bufif1 opmem5(W1v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+4]);
+			bufif1 opmem6(W2v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+5]);
 		}
 		else
 		{
@@ -419,7 +419,6 @@ generate
         	bufif1 opmem8(V2v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+7]);
         	bufif1 opmem9(W1v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+8]);
         	bufif1 opmem10(W2v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+9]);
-			bufif1 opmem11(W3v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+X+10]);
 		}
 		
       end
@@ -503,13 +502,25 @@ generate
   end
 endgenerate
 
-
+/*
 // mem
 for ( X = 0; X < Nmem; X = X+1) begin
     quadram qram( V1v_wires[X], V2v_wires[X], A1v_wires[X], A2v_wires[X],A3v_wires[X], A4v_wires[X],
         W1v_wires[X][0], W2v_wires[X][0], clk, M1h_wires[X], M2h_wires[X], M3h_wires[X], M4h_wires[X]);
         
 end
+*/
+//what is W1v_wires[X][0]
+
+hexaram1 I( V1v_wires[X], V2v_wires[X], A1v_wires[X], A2v_wires[X],A3v_wires[X], A4v_wires[X], A5v_wires[X], A6v_wires[X],
+        W1v_wires[X][0], W2v_wires[X][0], clk, M1h_wires[X], M2h_wires[X], M3h_wires[X], M4h_wires[X], M5h_wires[X], M6h_wires[X]);
+
+hexaram2 W( V1v_wires[X], V2v_wires[X], A1v_wires[X], A2v_wires[X],A3v_wires[X], A4v_wires[X], A5v_wires[X], A6v_wires[X],
+        W1v_wires[X][0], W2v_wires[X][0], clk, M1h_wires[X], M2h_wires[X], M3h_wires[X], M4h_wires[X], M5h_wires[X], M6h_wires[X]);
+
+dualram Y( V1v_wires[X], V2v_wires[X], A1v_wires[X], A2v_wires[X], W1v_wires[X][0], W2v_wires[X][0],
+		clk, M1h_wires[X], M2h_wires[X] );
+
 
 // mux
 for ( X = 0; X < Nmux; X = X+1) begin
