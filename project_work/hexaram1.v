@@ -17,7 +17,7 @@ module dualram ( input [`W-1:0] data_x, data_y, input [`W-1:0] addr_x, addr_y, i
             end
 endmodule
 
-module hexaram ( input [`W-1:0] data_a, data_b, input [`W-1:0] addr_a, addr_b,addr_c, addr_d, addr_e, addr_f
+module hexaram1 ( input [`W-1:0] data_a, data_b, input [`W-1:0] addr_a, addr_b,addr_c, addr_d, addr_e, addr_f
         input we_a, we_b, clk, output wire [`W-1:0] q_a, q_b,q_c, q_d, q_e, q_f);
         
 wire [`W-1:0] addr_x, addr_y;

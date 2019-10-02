@@ -1,11 +1,13 @@
 `include "params.vh"
 //hexaram for mem W
+//the one that should be with rows of 1,2,3,4,5 and 6
 module dualram ( input [`W-1:0] data_x, data_y, input [`W-1:0] addr_x, addr_y, input we_x, we_y, clk, output reg [`W-1:0] q_x, q_y);
-    integer i,j;
+    integer i,j,k=0;
         reg [`W-1:0] ram[`M-1:0];
         initial begin
-            for (i=0; i<`M; i=i+1)
-                ram[i] = 1;
+            for (i=0; i<6; i=i+1)
+                for(j=0; j<36; j=j+1, k=k+1)
+                    ram[k] = i;
         end
         always @ (posedge clk) begin
             if(we_x !== `W'bz && we_y !== `W'bz) begin

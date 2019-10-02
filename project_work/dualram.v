@@ -5,7 +5,7 @@ module dualram ( input [`W-1:0] data_x, data_y, input [`W-1:0] addr_x, addr_y, i
         reg [`W-1:0] ram[`M-1:0];
         initial begin
             for (i=0; i<`M; i=i+1)
-                ram[i] = 1;
+                ram[i] = 0;
         end
         always @ (posedge clk) begin
             if(we_x !== `W'bz && we_y !== `W'bz) begin
