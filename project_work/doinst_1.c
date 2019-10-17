@@ -66,14 +66,14 @@
 #define c6 36
 #define c7 32
 #define c8 36
-#define c9  //end of loop 1
-#define c10  //end of loop 2
-#define c11  //end of loop 3.1
-#define c12  //end of loop 3.2
-#define c13  //start of loop 1
-#define c14  //start of loop 2
-#define c15  //start of loop 3.1
-#define c16  //start of loop 3.2
+#define c9 17
+#define c10 13
+#define c11 5
+#define c12 4
+#define c13 1
+#define c14 3
+#define c15 5
+#define c16 11
 #define c17 0
 #define c18 1
 #define c19 2
@@ -249,7 +249,7 @@ void inst6()
 { int i,j;
   for(i=0;i<H;i++) for(j=0;j<W;j++) inst[i][j]=0;
   ass(vR(0),mux(0,plus(0,R(0),C(18)),plus(1,R(0),C(11)),les(0,R(3),C(1))));  //PC=Mux(PC+C0,PC+C2,R1<C1-1)
-                                                //we2=C6
+  for(i=0;i<H;i++) for(j=0;j<W;j++) fprintf(prog1,"%1d",inst[i][j]); fprintf(prog1,"\n");
 }
 
 
@@ -280,6 +280,7 @@ void inst7()
     ass(vA_W(3), R(21));
     ass(vA_W(4), R(22));
     ass(vA_W(5), R(23));
+    for(i=0;i<H;i++) for(j=0;j<W;j++) fprintf(prog1,"%1d",inst[i][j]); fprintf(prog1,"\n");
 }
 
 void inst8()
@@ -380,7 +381,7 @@ void inst12()
   ass(vW_Y(0), C(17));
   ass(vA_Y(0), plus(2,mull(0,R(1),C(6)),plus(3,mull(1,R(2),C(2)),R(3))));
 
-  for(i=0;i<H;i++) for(j=0;j<W;j++) fprintf(prog1,"%1d",inst[i][j]); fprintf(prog1,"\n");                                         //we2=C6
+  for(i=0;i<H;i++) for(j=0;j<W;j++) fprintf(prog1,"%1d",inst[i][j]); fprintf(prog1,"\n");       //we2=C6
                                     //we2=C6
 }
 
@@ -545,7 +546,6 @@ void main()
   config = fopen("params1.vh","w");
   int i,j,k;
   inst1();
-  niceprint();
   inst2();
   inst3();
   inst4();
@@ -553,6 +553,15 @@ void main()
   inst6();
   inst7();
   inst8();
-  printcofig();
+  inst9();
+  inst10();
+  inst11();
+  inst12();
+  inst13();
+  inst14();
+  inst15();
+  inst16();
+  inst17();
+  //printcofig();
   fclose(prog1); fclose(const1); fclose(config);
 }

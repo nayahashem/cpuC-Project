@@ -1,3 +1,6 @@
+/* 
+ * CPUc - Switches module
+ */
 
 `include "params.vh"
 
@@ -262,8 +265,8 @@ generate
 		if(Y != 12) begin
 			bufif1 memop3(OPv_wires[X][Z], M3h_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop+Nconst+Nmux+2)+(first)*Y+Nreg+X]);
 			bufif1 memop4(OPv_wires[X][Z], M4h_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop+Nconst+Nmux+3)+(first)*Y+Nreg+X]);
-			bufif1 memop5(OPv_wires[X][Z], M5h_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop+Nconst+Nmux+4)+(first)*Y+Nreg+X]);
-			bufif1 memop6(OPv_wires[X][Z], M6h_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop+Nconst+Nmux+5)+(first)*Y+Nreg+X]);
+			bufif1 memop3(OPv_wires[X][Z], M5h_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop+Nconst+Nmux+4)+(first)*Y+Nreg+X]);
+			bufif1 memop4(OPv_wires[X][Z], M6h_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop+Nconst+Nmux+5)+(first)*Y+Nreg+X]);
 		end
 	  end
     end
@@ -282,12 +285,14 @@ generate
 	  for ( Z = `W-1; Z >= 0 ; Z = Z-1) begin
 		bufif1 regmema1(A1v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+3*Nmux+X*6]);
 		bufif1 regmema2(A2v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+3*Nmux+X*6+1]);
-		if(X!=2) begin
+		if(X!=2)
+		{
 			bufif1 regmema3(A3v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+3*Nmux+X*6+2]);
 			bufif1 regmema4(A4v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+3*Nmux+X*6+3]);
 			bufif1 regmema5(A5v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+3*Nmux+X*6+4]);
 			bufif1 regmema6(A6v_wires[X][Z], Rh_wires[Y][Z], crossbar_con[(first)*Y+Nreg+2*Nop+3*Nmux+X*6+5]);
-		end
+
+		}
 	  end
     end
   end
@@ -352,12 +357,14 @@ generate
 	  for ( Z = `W-1; Z >= 0 ; Z = Z-1) begin
         bufif1 opmema1(A1v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+3*Nmux+X*6]);
         bufif1 opmema2(A2v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+1]);
-		if(X!=2) begin
+		if(X!=2)
+		{
 			bufif1 opmema3(A3v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+2]);
        		bufif1 opmema4(A4v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+3]);
        	 	bufif1 opmema5(A5v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+4]);
         	bufif1 opmema6(A6v_wires[X][Z], OPh_wires[Y][Z], crossbar_con[(first)*Nreg+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+5]);
-		end
+        
+		}
       end
 	end
   end
@@ -422,12 +429,14 @@ generate
 	  for ( Z = `W-1; Z >= 0 ; Z = Z-1) begin
 		bufif1 constmema1(A1v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+3*Nmux+X*6]);
 		bufif1 constmema2(A2v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+1]);
-		if(X!=2) begin
+		if(X!=2)
+		{
 			bufif1 constmema3(A3v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+2]);
 			bufif1 constmema4(A4v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+3]);
 			bufif1 constmema5(A5v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+4]);
 			bufif1 constmema6(A6v_wires[X][Z], Ch_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop)+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+5]);
-		end
+	
+		}
 	  end
     end
   end
@@ -491,12 +500,14 @@ generate
 	  for ( Z = `W-1; Z >= 0 ; Z = Z-1) begin
 		bufif1 muxmema1(A1v_wires[X][Z], muxh_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop+Nconst)+(first)*Y+Nreg+2*Nop+3*Nmux+X*6]);
 		bufif1 muxmema2(A2v_wires[X][Z], muxh_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop+Nconst)+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+1]);
-		if(X!=2) begin
+		if(X!=2)
+		{
 			bufif1 muxmema3(A3v_wires[X][Z], muxh_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop+Nconst)+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+2]);
 			bufif1 muxmema4(A4v_wires[X][Z], muxh_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop+Nconst)+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+3]);
 			bufif1 muxmema5(A5v_wires[X][Z], muxh_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop+Nconst)+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+4]);
 			bufif1 muxmema6(A6v_wires[X][Z], muxh_wires[Y][Z], crossbar_con[(first)*(Nreg+Nop+Nconst)+(first)*Y+Nreg+2*Nop+3*Nmux+X*6+5]);
-		end
+	
+		}
 	  end
     end
   end

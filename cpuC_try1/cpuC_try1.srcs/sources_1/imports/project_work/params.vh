@@ -20,8 +20,8 @@
 `define Ymem 1
 `define Nmem `Imem + `Wmem + `Ymem
 
-`define first `Nreg + 2*`Nop + 3*`Nmux + 11*`Imem + 11*`Wmem + 5*`Ymem
-`define second `Nreg + `Nop + `Nconst + `Nmux + 6*`Imem + 6*`Wmem + 2*`Ymem
+`define first `Nreg+2*`Nop+3*`Nmux+11*`Imem+11*`Wmem+5*`Ymem
+`define second `Nreg+`Nop+`Nconst+`Nmux+6*`Imem+6*`Wmem+2*`Ymem
 `define M 256 // memory size
 
 `define CONST_FILE "my_const.mem"
